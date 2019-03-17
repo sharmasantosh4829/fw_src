@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 pwd;
 cd ../make;
