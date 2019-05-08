@@ -1,0 +1,87 @@
+@@TestID:Control/DIMMER/1
+@@Title:Control/DIMMER/1:With Dimmer ON while Night Mode gets triggered, Night mode brightness settings  will not get applied unless user turns Dimmer OFF and then ON again(manually/via App).
+@@Type:POSITIVE
+@@Description:Control/DIMMER/1:With Dimmer ON while Night Mode gets triggered, Night mode brightness settings  will not get applied unless user turns Dimmer OFF and then ON again(manually/via App).
+@@deviceType:Dimmer
+@@priority:P0
+@@----------
+@@ TEST PLAN
+@@----------
+@@ Step 1. Launch WeMo App on Home Router
+@@ Expected Result : Paired WeMo Devices should get discovered successfully
+@@ Step 2. Turn ON Dimmer via WeMo App or Manual operation
+@@ Expected Result : Dimmer should get turned ON and correct status should be reflected on WeMo App and Dimmer hardware
+@@ Step 3. Open Dimmer Device Drawer and enable Night Mode settings.
+@@ Expected Result : Night mode settings should get enabled
+@@ Step 4.  Set the Night Mode Brightness(20%) and start and end time and save the settings
+@@ Expected Result : Night Mode Settings should be saved successfully in the app and on the firmware but saved settings should not be displayed in the Dimmer tile.
+@@ Step 5. Check current brightness value(70%) (both App and Firmware) as soon as  Night Mode becomes active while Dimmer is in ON state
+@@ Expected Result : The brightness bar in the Dimmer should show last saved brightness(70%) only on WeMo App and not the one in Night mode. Also same brightness remains applied on Firmware.
+@@ Step 6. Turn off/on Dimmer via WeMo App or Manual operation during Night Mode Interval.
+@@ Expected Result : Night Mode brightness(20%) should be displayed in the brightness bar and Dimmer tile and same brightness value gets applied to the firmware and Dimmer hardware
+@@ Step 7. Repeat the step 6, twice
+@@ Expected Result : Test Results should be the same as mentioned in step 6s
+@@ Step 8. Repeat the above steps on Remote
+@@ Expected Result : Test Results should be same as mentioned in particular Test Step.
+@@--------------------------
+@@ AUTOMATION FUNCTION CALLS
+@@--------------------------
+
+
+#######################################
+#Step 1. Launch WeMo App on Home Router
+#######################################
+1.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._unlockAndroid();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+2.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._selectTheWifiFromWifiManager(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+3.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+4.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+5.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._turnOnWemo(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+6.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._clickToOpenDimmerDrawer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+7.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheBrightnessforDimmer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],70);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+8.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._goToTheNightModeSettingsPageOfDimmer();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+9.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._turnOnNightMode();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+10.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheBrightnessforDimmerOnNightModeSettingsPage(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],20);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+11.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheCustomStartOrEndTimeOnNightModeSettingsPage(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier,"Start","9");self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+12.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheCustomStartOrEndTimeOnNightModeSettingsPage(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier,"End","15");self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+13.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._confirmChangesOnNightModeSettingsPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True);time.sleep(2)
+#7.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._clickOnBackButton();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+14.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._scrollUpTheScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+15.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._verifyTheBrightnessForDimmer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],70);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+16.time.sleep(540)
+17.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._turnOffWemo(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);time.sleep(3)
+18.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._verifyTheBrightnessForDimmer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],20);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+19.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._goToTheNightModeSettingsPageOfDimmer();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+20.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._turnOffNightMode();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+21.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._confirmChangesOnNightModeSettingsPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True);time.sleep(2)
+22.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+23.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+$$PASSED TESTID:Control/DIMMER/1
+
+# #############################################################
+# #Flow on Remote Network
+# #############################################################
+# 24.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._selectTheWifiFromWifiManager(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.remotWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.remotWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 25.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 26.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 27.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._turnOnWemo(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 28.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._clickToOpenDimmerDrawer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 29.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheBrightnessforDimmer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],70);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 30.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._goToTheNightModeSettingsPageOfDimmer();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 31.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._turnOnNightMode();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 32.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheBrightnessforDimmerOnNightModeSettingsPage(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],20);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 33.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheCustomStartOrEndTimeOnNightModeSettingsPage(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier,"Start","9");self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 34.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._setTheCustomStartOrEndTimeOnNightModeSettingsPage(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier,"End","15");self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 35.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._confirmChangesOnNightModeSettingsPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True);time.sleep(3)
+# #7.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._clickOnBackButton();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 36.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._scrollUpTheScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 37.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._verifyTheBrightnessForDimmer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],70);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 38.time.sleep(540)
+# 39.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._turnOffWemo(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);time.sleep(5)
+# 40.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._verifyTheBrightnessForDimmer(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName],20);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 41.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._goToTheNightModeSettingsPageOfDimmer();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 42.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._turnOffNightMode();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True)
+# 43.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp_Dimmer._confirmChangesOnNightModeSettingsPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp_Dimmer.result,True);time.sleep(2)
+# 44.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 45.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.DIMMER in self.devicesInNetwork:self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# $$PASSED TESTID:Control/DIMMER/1
+

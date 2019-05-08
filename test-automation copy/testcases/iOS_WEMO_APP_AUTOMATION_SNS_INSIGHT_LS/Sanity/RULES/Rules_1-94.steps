@@ -1,0 +1,192 @@
+@@TestID:Rules/1
+@@		 Rules/94
+@@Title:Rules/1:WeMo Device should get turned ON/OFF once Simple Rule created for Today gets triggered as per configured time & action followed by no status change on rule deletion
+@@		Rules/94:Timer Rule should work while rule name contains any of the SPECIAL characters.
+@@Type:POSITIVE
+@@Description:Rules/1:WeMo Device should get turned ON/OFF once Simple Rule created for Today gets triggered as per configured time & action followed by no status change on rule deletion
+@@			  Rules/94:Timer Rule should work while rule name contains any of the SPECIAL characters.
+@@deviceType:Switch,Insight,Light,InsightV2,Maker,SwitchV2
+@@Priority:P0
+@@-----------------------------------------------
+@@TEST LINK TEST STEPS Rules/1
+@@-----------------------------------------------
+@@Step 1. Connect the SmartDevice(S1) to the Home Router and launch the WeMo App.
+@@Expected Result : All the WeMo Devices paired with Home Router are displayed in the Devices Screen
+@@Step 2. Tap on the 'Rules' tab on SmartDevice(S1) and select the option to create a Simple rule on Multiple Switches- "CONTROL A DEVICE - By time, sunrise/sunset".
+@@Expected Result : The 'New Timer Rule' screen is displayed.
+@@Step 3. Configure Simple Rule(1st) as below :
+@@         Turn ON/OFF :<Switch1,2..N> ON
+@@         When : ON <Select Time>
+@@         Days :<today>
+@@         Rule Name : ON-Today
+@@        Tap on the Save Button and verify Rule Details screen
+@@Expected Result : 'ON-Today' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1) and should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 4. Launch SmartDevice(S2) on Remote Wi-Fi Router and Go to Rules Screen.
+@@Expected Result : Rule created in STEP-3 should be visible remotely on SmartDevice(S2) .
+@@Step 5. At time specified for "ON-Today", check if <Switch1,2..N> are turned ON and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "ON-Today" should get turned ON at the time specified in the rule and WeMo App Devices screen should show toggle button status as ON on SmartDevice(S1-Local) and SmartDevice(S2-Remote)
+@@Step 6. Now Launch SmartDevice(S1) on Remote Wi-Fi and create SimpleRule(2nd) to Turn OFF all WeMo Switches (turn ON state as of now):
+@@         Turn ON/OFF :<Switch1,2..N> OFF
+@@         When : OFF <Select Time>
+@@         Days :<today>
+@@         Rule Name : SimpleRule-OFF
+@@Expected Result : 'SimpleRule-OFF' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1).Also SmartDevice(S1) should show 2 Simple Rules now i.e 'ON-Today' and 'SimpleRule-OFF' and Rules should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 7. Verify the Rule Screen on SmartDevice(S2) before rule gets activated.
+@@Expected Result : SmartDevice(S2) should reflect 2 Rules 'ON-Today' and 'SimpleRule-OFF' as configured using SmartDevice(S1)
+@@Step 8. At time specified for "SimpleRule-OFF", check if <Switch1,2..N> are turned OFF and verify the Device status on SmartDevice(S1-Remote) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-OFF" should get turned OFF at the time specified in the rule and WeMo App Devices screen should show toggle button status as OFF on SmartDevice(S1-Remote) and SmartDevice(S2-Remote)
+@@Step 9. While SmartDevices(S1/S2) is on REMOTE delete "SimpleRule-OFF" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule "SimpleRule-OFF" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Devices FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@Step 10.Launch SmartDevice(S1) locally while SmartDevice(S2) is on REMOTE.Delete "ON-Today" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule screen should become empty .Rule "ON-Today" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Device FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@------------------------------------
+@@AUTOMATION FUNCTION CALLS STEPS
+@@------------------------------------
+
+1.self.iOSPrimaryWeMoApp._unlockIOS();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+2.self.iOSPrimaryWeMoApp._goToTheSettingsPageandSelectTheWifi(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+3.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+4.DEVICES_IN_NETWORK = []
+5.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+6.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+7.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+8.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+9.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+10.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+11.DEVICE_TYPE = []
+12.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER)
+13.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH)
+14.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH)
+15.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+16.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2)
+17.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2)
+18.DEVICE_SERIAL_NUMBER = []
+19.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+20.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+21.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+22.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+23.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+24.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+
+25.for DEVICES in DEVICES_IN_NETWORK:self.iOSPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(DEVICES);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#23.for DEVICES in DEVICES_IN_NETWORK:self.iOSPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True);self.iOSPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+26.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+#25.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+27.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+28.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.iOSPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+####################
+## CREATE  Rules -ON
+####################
+## ON-Today
+29.self.iOSPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.iOSPrimaryWeMoApp.result , True)
+30.self.iOSPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+31.self.iOSPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+32.for DEVICE in DEVICES_IN_NETWORK:self.iOSPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True);self.iOSPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+33.self.iOSPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+34.self.iOSPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+35.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+36.Tomorrow= self.util.getTimeInStringFormat(self.util.addSecondsToTime(86400))['weekday']
+37.CurrentYear= self.util.getTimeInStringFormat(self.util.getCurrentTime())['year']
+38.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["hour"]
+39.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["minute"]
+40.StartTime_ON_Today = "%s:%s"%(StartHH,StartMM)
+41.self.iOSPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+42.self.iOSPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+43.self.iOSPrimaryWeMoApp._selectIndividualDay(Weekday);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+44.self.iOSPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+45.self.iOSPrimaryWeMoApp._createANameOfRule_TimerRule("**ON-Today@@");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+46.self.iOSPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+47.self.iOSPrimaryWeMoApp._verifyRuleCreated("**ON-Today@@");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+@@RULESDB
+48.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME='**ON-Today@@');self.VerifyEqual(self.wemoAppUtility.result,True)
+##########################
+##  VERIFY THE Rules   ##
+##########################
+##VERIFY -ON_Today
+49.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+50.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+51.self.iOSPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Today);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+52.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+53.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+54.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+55.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+56.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+57.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+58.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+59.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+60.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+61.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+62.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+63.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+64.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+65.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+66.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+67.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#65.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"ON",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+#66.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+#67.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#68.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#####################
+## CREATE  Rules -OFF
+#####################
+## OFF-Today
+#69.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+68.self.iOSPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.iOSPrimaryWeMoApp.result , True)
+69.self.iOSPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+70.for DEVICE in DEVICES_IN_NETWORK:self.iOSPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True);self.iOSPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+71.self.iOSPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+72.self.iOSPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+73.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+74.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["hour"]
+75.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["minute"]
+76.StartTime_OFF_Today = "%s:%s"%(StartHH,StartMM)
+77.self.iOSPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+78.self.iOSPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+79.self.iOSPrimaryWeMoApp._selectIndividualDay(Weekday);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+80.self.iOSPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+81.self.iOSPrimaryWeMoApp._createANameOfRule_TimerRule("**OFF-Today@@");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+82.self.iOSPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+83.self.iOSPrimaryWeMoApp._verifyRuleCreated("**OFF-Today@@");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+84.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME='**OFF-Today@@');self.VerifyEqual(self.wemoAppUtility.result,True)
+85.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+86.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+##########################
+##  VERIFY THE Rules   ##
+##########################
+##VERIFY -OFF_Today
+87.self.iOSPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Today);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+88.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+89.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+90.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+91.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+92.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+93.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+94.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+95.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+96.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+97.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+98.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+99.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+100.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp_Insight.result,True)
+101.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+102.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+103.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.iOSPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#104.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#105.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#106.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+#107.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@----------------------------
+@@ DELETE ALL Rules
+@@--------------------------
+#108.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+104.self.iOSPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.iOSPrimaryWeMoApp.result , True)
+105.self.iOSPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+106.self.iOSPrimaryWeMoApp._verifyTheRuleIsDeleted("**ON-Today@@");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+107.self.iOSPrimaryWeMoApp._verifyTheRuleIsDeleted("**OFF-Today@@");self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+108.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+109.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+@@RULESDB
+110.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME="**ON-Today@@");self.VerifyEqual(self.wemoAppUtility.result,False)
+111.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME="**OFF-Today@@");self.VerifyEqual(self.wemoAppUtility.result,False)
+$$PASSED TESTID:Rules/1
+$$PASSED TESTID:Rules/94

@@ -1,0 +1,660 @@
+@@TestID:Rules/2
+@@       Rules/3
+@@       Rules/4
+@@       Rules/5
+@@Title:Rules/2:WeMo Device should get turned ON/OFF once Simple Rule created for Specific Days gets triggered as per configured time & action followed by no status change on rule deletion.
+@@      Rules/3:WeMo Device should get turned ON/OFF once Simple Rule created for WeekDays gets triggered as per configured time & action followed by no status change on rule deletion.
+@@      Rules/4:WeMo Device should get turned ON/OFF once Simple Rule created for Weekend gets triggered as per configured time & action followed by no status change on rule deletion.
+@@      Rules/5:WeMo Device should NOT get turned ON/OFF as per Simple Timer rule for days other than Specific Days mentioned in the Rule .
+@@Type:POSITIVE
+@@Description:Rules/2:WeMo Device should get turned ON/OFF once Simple Rule created for Specific Days gets triggered as per configured time & action followed by no status change on rule deletion.
+@@            Rules/3:WeMo Device should get turned ON/OFF once Simple Rule created for WeekDays gets triggered as per configured time & action followed by no status change on rule deletion.
+@@            Rules/4:WeMo Device should get turned ON/OFF once Simple Rule created for Weekend gets triggered as per configured time & action followed by no status change on rule deletion.
+@@            Rules/5:WeMo Device should NOT get turned ON/OFF as per Simple Timer rule for days other than Specific Days mentioned in the Rule .
+@@deviceType:Switch,Insight,Light,InsightV2,Maker
+@@Priority:P2
+@@-----------------------------------------------
+@@TEST LINK TEST STEPS Rules/2
+@@-----------------------------------------------
+@@Step 1. Connect the SmartDevice(S1) to the Home Router and launch the WeMo App.
+@@Expected Result : All the WeMo Devices paired with Home Router are displayed in the Devices Screen
+@@Step 2. Tap on the 'Rules' tab on SmartDevice(S1) and select the option to create a Simple rule on Multiple Switches for SPECIFIC days- "CONTROL A DEVICE - By time, sunrise/sunset".
+@@Expected Result : The 'New Timer Rule' screen is displayed.
+@@Step 3. Configure Simple Rule(1st) as below :
+@@        Turn ON/OFF :<Switch1,2..N> ON
+@@        When : ON <Select Time>
+@@        Days :<today and Sunday>
+@@        Rule Name : SimpleRule-ON
+@@       Tap on the Save Button and verify Rule Details screen
+@@Expected Result : 'SimpleRule-ON' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1) and rule should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 4. Launch SmartDevice(S2) on Remote Wi-Fi Router and Go to Rules Screen.
+@@Expected Result : Rule created in STEP-3 should be visible remotely on SmartDevice(S2).
+@@Step 5. At time specified for "SimpleRule-ON", check if <Switch1,2..N> are turned ON and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-ON" should get turned ON at the time specified in the rule and WeMo App Devices screen should show toggle button status as ON on SmartDevice(S1-Local) and SmartDevice(S2-Remote)
+@@Step 6. Now Launch SmartDevice(S1) on Remote Wi-Fi and create SimpleRule(2nd) to Turn OFF all WeMo Switches (turn ON state as of now):
+@@         Turn ON/OFF :<Switch1,2..N> OFF
+@@         When : OFF <Select Time>
+@@         Days :<today and Sunday>
+@@         Rule Name : SimpleRule-OFF
+@@Expected Result : 'SimpleRule-OFF' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1).Also SmartDevice(S1) should show 2 Simple Rules now i.e 'SimpleRule-ON' and 'SimpleRule-OFF' and rule should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 7. Verify the Rule Screen on SmartDevice(S2) before rule gets activated.
+@@Expected Result : SmartDevice(S2) should reflect 2 Rules 'SimpleRule-ON' and 'SimpleRule-OFF' as configured using SmartDevice(S1)
+@@Step 8. At time specified for "SimpleRule-OFF", check if <Switch1,2..N> are turned OFF and verify the Device status on SmartDevice(S1-Remote) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-OFF" should get turned OFF at the time specified in the rule and WeMo App Devices screen should show toggle button status as OFF on SmartDevice(S1-Remote) and SmartDevice(S2-Remote)
+@@Step 9. Disconnect internet connectivity of HomeRouter ,kill WeMo Apps(S1 and S2) & change current day to Sunday and time just before "SimpleRule-ON" time value(S1 and S2) .Launch WeMo App on SmartDevices(S1/S2) on Local & perform TimeSync and check whether Rules "SimpleRule-ON" and "SimpleRule-OFF" gets applied.
+@@Expected Result : After local TimeSync WeMo Devices should get Turned-ON and Turned-OFF at configured time values in "SimpleRule-ON" and "SimpleRule-OFF" Rules and the Devices screen on SmartDevices(S1 and S2) should reflect true WeMo Devices status(ON/OFF).
+@@Step 10. While SmartDevices(S1/S2) is on LOCAL delete "SimpleRule-OFF" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule "SimpleRule-OFF" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Devices FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@Step 11.While SmartDevices(S1/S2) is on LOCAL delete "SimpleRule-ON" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule screen should become empty .Rule "SimpleRule-ON" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Device FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@----------------------------------------
+@@TEST LINK TEST STEPS Rules/3
+@@----------------------------------------
+@@Step 1. Connect the SmartDevice(S1) to the Home Router and launch the WeMo App.
+@@Expected Result : All the WeMo Devices paired with Home Router are displayed in the Devices Screen
+@@Step 2. Tap on the 'Rules' tab on SmartDevice(S1) and select the option to create a Simple rule on Multiple Switches for SPECIFIC days- "CONTROL A DEVICE - By time, sunrise/sunset".
+@@Expected Result : The 'New Timer Rule' screen is displayed.
+@@Step 3. Configure Simple Rule(1st) as below :
+@@         Turn ON/OFF :<Switch1,2..N> ON
+@@         When : ON <Select Time>
+@@         Days :<WeekDays(Monday To Friday)>
+@@         Rule Name : SimpleRule-ON
+@@       Tap on the Save Button and verify Rule Details screen
+@@Expected Result : 'SimpleRule-ON' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1) and rule should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 4. Launch SmartDevice(S2) on Remote Wi-Fi Router and Go to Rules Screen.
+@@Expected Result : Rule created in STEP-3 should be visible remotely on SmartDevice(S2)
+@@Step 5. At time specified for "SimpleRule-ON", check if <Switch1,2..N> are turned ON and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-ON" should get turned ON at the time specified in the rule and WeMo App Devices screen should show toggle button status as ON on SmartDevice(S1-Local) and SmartDevice(S2-Remote)
+@@Step 6. Now Launch SmartDevice(S1) on Remote Wi-Fi and create SimpleRule(2nd) to Turn OFF all WeMo Switches (turn ON state as of now):
+@@         Turn ON/OFF :<Switch1,2..N> OFF
+@@         When : OFF <Select Time>
+@@         Days :<Weekdays(Monday To Friday)>
+@@         Rule Name : SimpleRule-OFF
+@@Expected Result : 'SimpleRule-OFF' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1).Also SmartDevice(S1) should show 2 Simple Rules now i.e 'SimpleRule-ON' and 'SimpleRule-OFF' and rule should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 7. Verify the Rule Screen on SmartDevice(S2) before rule gets activated.
+@@Expected Result : SmartDevice(S2) should reflect 2 Rules 'SimpleRule-ON' and 'SimpleRule-OFF' as configured using SmartDevice(S1)
+@@Step 8. At time specified for "SimpleRule-OFF", check if <Switch1,2..N> are turned OFF and verify the Device status on SmartDevice(S1-Remote) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-OFF" should get turned OFF at the time specified in the rule and WeMo App Devices screen should show toggle button status as OFF on SmartDevice(S1-Remote) and SmartDevice(S2-Remote)
+@@Step 9. Disconnect internet connectivity of HomeRouter ,kill WeMo Apps(S1 and S2) & change current date to future(some other weekday) and time just before "SimpleRule-ON" time value(S1 and S2) .Launch WeMo App on SmartDevices(S1/S2) on Local & perform TimeSync and check whether Rules "SimpleRule-ON" and "SimpleRule-OFF" gets applied.
+@@Expected Result : After local TimeSync WeMo Devices should get Turned-ON and Turned-OFF at configured time values in "SimpleRule-ON" and "SimpleRule-OFF" Rules and the Devices screen on SmartDevices(S1 and S2) should reflect true WeMo Devices status(ON/OFF)
+@@Step 10. While SmartDevices(S1/S2) is on LOCAL delete "SimpleRule-OFF" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Step 11.While SmartDevices(S1/S2) is on LOCAL delete "SimpleRule-ON" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule "SimpleRule-OFF" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Devices FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@-----------------------------------------------
+@@TEST LINK TEST STEPS Rules/4
+@@-----------------------------------------------
+@@Step 1. Connect the SmartDevice(S1) to the Home Router and launch the WeMo App.
+@@Expected Result : All the WeMo Devices paired with Home Router are displayed in the Devices Screen
+@@Step 2. Tap on the 'Rules' tab on SmartDevice(S1) and select the option to create a Simple rule on Multiple Switches for SPECIFIC days- "CONTROL A DEVICE - By time, sunrise/sunset".
+@@Expected Result : The 'New Timer Rule' screen is displayed.
+@@Step 3. Configure Simple Rule(1st) as below :
+@@        Turn ON/OFF :<Switch1,2..N> ON
+@@        When : ON <Select Time>
+@@        Days :<Weekend(Saturday,Sunday)>
+@@        Rule Name : SimpleRule-ON
+@@       Tap on the Save Button and verify Rule Details screen
+@@Expected Result : 'SimpleRule-ON' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1) and rule should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 4. Launch SmartDevice(S2) on Remote Wi-Fi Router and Go to Rules Screen.
+@@Expected Result : Rule created in STEP-3 should be visible remotely on SmartDevice(S2)
+@@Step 5. Assuming today is NOT Saturday remove WAN cable of Homerouter ,kill WeMo Apps(S1 and S2) & change current day to Sunday and time just before "SimpleRule-ON" time value(S1 and S2) .Launch WeMo App on SmartDevices(S1/S2) on Local & perform TimeSync at time specified for "SimpleRule-ON", check if <Switch1,2..N> are turned ON and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-ON" should get turned ON at the time specified in the rule and WeMo App Devices screen should show toggle button status as ON on SmartDevice(S1-Local) and SmartDevice(S2-Local)
+@@Step 6. Now Launch SmartDevice(S1) on Local Wi-Fi and create SimpleRule(2nd) to Turn OFF all WeMo Switches (turn ON state as of now):
+@@        Turn ON/OFF :<Switch1,2..N> OFF
+@@        When : OFF <Select Time>
+@@        Days :<Weekend(Saturday,Sunday)>
+@@        Rule Name : SimpleRule-OFF
+@@Expected Result : 'SimpleRule-OFF' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1).Also SmartDevice(S1) should show 2 Simple Rules now i.e 'SimpleRule-ON' and 'SimpleRule-OFF' and rule should be saved correctly in Rules.DB file of associated WeMo Device.
+@@Step 7. Launch SmartDevice(S2) locally & verify the Rule Screen on SmartDevice(S2) before rule gets activated.
+@@Expected Result : SmartDevice(S2) should reflect 2 Rules 'SimpleRule-ON' and 'SimpleRule-OFF' as configured using SmartDevice(S1)
+@@Step 8. At time specified for "SimpleRule-OFF", check if <Switch1,2..N> are turned OFF and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Local).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-OFF" should get turned OFF at the time specified in the rule and WeMo App Devices screen should show toggle button status as OFF on SmartDevice(S1-Local) and SmartDevice(S2-Local)
+@@Step 9. Disconnect internet connectivity of HomeRouter ,kill WeMo Apps(S1 and S2) & change current date to Sunday and time just before "SimpleRule-ON" time value(S1 and S2) .Launch WeMo App on SmartDevices(S1/S2) on Local & perform TimeSync and check whether Rules "SimpleRule-ON" and "SimpleRule-OFF" gets applied
+@@Expected Result : After local TimeSync WeMo Devices should get Turned-ON and Turned-OFF at configured time values in "SimpleRule-ON" and "SimpleRule-OFF" Rules and the Devices screen on SmartDevices(S1 and S2) should reflect true WeMo Devices status(ON/OFF).
+@@Step 10. While SmartDevices(S1/S2) is on LOCAL delete "SimpleRule-OFF" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule "SimpleRule-OFF" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Devices FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@Step 11.While SmartDevices(S1/S2) is on LOCAL delete "SimpleRule-ON" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule screen should become empty .Rule "SimpleRule-ON" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Device FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@-----------------------------------------------
+@@TEST LINK TEST STEPS Rules/5
+@@-----------------------------------------------
+@@Step 1. Connect the SmartDevice(S1) to the Home Router and launch the WeMo App.
+@@Expected Result : All the WeMo Devices paired with Home Router are displayed in the Devices Screen
+@@Step 2. Tap on the 'Rules' tab on SmartDevice(S1) and select the option to create a Simple rule on Multiple Switches for SPECIFIC days- "CONTROL A DEVICE - By time, sunrise/sunset".
+@@Expected Result : The 'New Timer Rule' screen is displayed.
+@@Step 3. Configure Simple Rule(1st) as below :
+@@       Turn ON/OFF :<Switch1,2..N> ON
+@@       When : ON <Select Time>
+@@       Days :<today and Sunday>
+@@       Rule Name : SimpleRule-ON
+@@      Tap on the Save Button and verify Rule Details screen
+@@Expected Result : 'SimpleRule-ON' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1) and rule should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 4. Launch SmartDevice(S2) on Remote Wi-Fi Router and Go to Rules Screen.
+@@Expected Result : Rule created in STEP-3 should be visible remotely on SmartDevice(S2)
+@@Step 5. At time specified for "SimpleRule-ON", check if <Switch1,2..N> are turned ON and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-ON" should get turned ON at the time specified in the rule and WeMo App Devices screen should show toggle button status as ON on SmartDevice(S1-Local) and SmartDevice(S2-Remote)
+@@Step 6. Now Launch SmartDevice(S1) on Local Wi-Fi and create SimpleRule(2nd) to Turn OFF all WeMo Switches (turn ON state as of now):
+@@        Turn ON/OFF :<Switch1,2..N> OFF
+@@        When : OFF <Select Time>
+@@        Days :<today and Sunday>
+@@        Rule Name : SimpleRule-OFF
+@@Expected Result : 'SimpleRule-OFF' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1).Also SmartDevice(S1) should show 2 Simple Rules now i.e 'SimpleRule-ON' and 'SimpleRule-OFF' and rule should be saved correctly in Rules.DB file of associated WeMo Device.
+@@Step 7. Verify the Rule Screen on SmartDevice(S2) before rule gets activated.
+@@Expected Result : SmartDevice(S2) should reflect 2 Rules 'SimpleRule-ON' and 'SimpleRule-OFF' as configured using SmartDevice(S1)
+@@Step 8. At time specified for "SimpleRule-OFF", check if <Switch1,2..N> are turned OFF and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-OFF" should get turned OFF at the time specified in the rule and WeMo App Devices screen should show toggle button status as OFF on SmartDevice(S1-Local) and SmartDevice(S2-Remote)
+@@Step 9. Disconnect internet connectivity of HomeRouter ,kill WeMo Apps(S1 and S2) & change current day to the day which isn't a part of SimpleRules (both) and time just before "SimpleRule-ON" time value(S1 and S2) .Launch WeMo App on SmartDevices(S1/S2) on Local & perform TimeSync and check whether Rules "SimpleRule-ON" and "SimpleRule-OFF" gets applied
+@@Expected Result : After local TimeSync WeMo Devices should remain Turned-OFF at configured time values in "SimpleRule-ON" and "SimpleRule-OFF" Rules and the Devices screen on SmartDevices(S1 and S2) should reflect true WeMo Devices status(i.e OFF)
+@@------------------------------------
+@@AUTOMATION FUNCTION CALLS STEPS
+@@------------------------------------
+@@Step 01. Call self.AndroidPrimaryWeMoApp._unlockAndroid();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 02. Call self.AndroidPrimaryWeMoApp._selectTheWifiFromWifiManager(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 03. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 04. Call DEVICES_IN_NETWORK = []
+@@Step 05. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 06. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 07. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 08. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 09. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 10. Call DEVICE_TYPE = []
+@@Step 11. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER)
+@@Step 12. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH)
+@@Step 13. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH)
+@@Step 14. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+@@Step 15. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+@@Step 16. Call DEVICE_SERIAL_NUMBER = []
+@@Step 17. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 18. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 19. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 20. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 21. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 22. Call for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 23. Call for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 25. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 26. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 27. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+@@Step 28. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 29. Call self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+@@Step 30. Call self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 31. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 32. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 33. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 34. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 35. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 35. Call CurrentYear= self.util.getTimeInStringFormat(self.util.getCurrentTime())['year']
+@@Step 36. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(900))["hour"]
+@@Step 37. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(900))["minute"]
+@@Step 38. Call StartTime_ON_Today_Sunday = "%s:%s"%(StartHH,StartMM)
+@@Step 39. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 40. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 41. Call self.AndroidPrimaryWeMoApp._selectMultipleDays(Weekday,"Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 42. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 43. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 44. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 45. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 46. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 47. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 48. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 49. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 50. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 51. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(960))["hour"]
+@@Step 52. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(960))["minute"]
+@@Step 53. Call StartTime_ON_Weekdays = "%s:%s"%(StartHH,StartMM)
+@@Step 54. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 55. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 56. Call self.AndroidPrimaryWeMoApp._selectMultipleDays("Monday","Tuesday","Wednesday","Thursday","Friday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 57. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 58. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 59. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 60. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 61. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 62. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 63. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 64. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 65. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 66. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1400))["hour"]
+@@Step 67. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1400))["minute"]
+@@Step 68. Call StartTime_ON_Weekends = "%s:%s"%(StartHH,StartMM)
+@@Step 69. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 70. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 71. Call self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 72. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 73. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 74. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 75. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 76. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 77. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 78. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 79. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 80. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 81. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1700))["hour"]
+@@Step 82. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1700))["minute"]
+@@Step 83. Call StartTime_ON_Weekends_Not_Applied = "%s:%s"%(StartHH,StartMM)
+@@Step 84. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 85. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 86. Call self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 87. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 88. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 89. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 90. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 91. Call self.AndroidPrimaryWeMoApp._goToTheDevicesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 92. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 93. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 94. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 95. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._forgetAllWifiNetworkfromWifiSelectionPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 96. Call self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.PrimarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 97. Call self.AndroidPrimaryWeMoApp._syncTheTimeOnSmartDevice(CurrentYear,"Tomorrow");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 98. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 99. Call self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Weekdays);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 100. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 101. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 102. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 103. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 104. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 105. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 106. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 107. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 108. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 109. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+@@Step 110. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 111. Call self.AndroidPrimaryWeMoApp._syncTheTimeActualLocation(CurrentYear);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 112. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 113. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 114. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+@@Step 115. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 116. Call if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Weekends_Not_Applied);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 117. Call if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 118. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 119. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 120. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 121. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 122. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 123. Call if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 124. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 125. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 126. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 127. Call self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+@@Step 128. Call self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 129. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 130. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 131. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 132. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 133. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 134. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(900))["hour"]
+@@Step 135. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(900))["minute"]
+@@Step 136. Call StartTime_OFF_Today_Sunday = "%s:%s"%(StartHH,StartMM)
+@@Step 137. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 138. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 139. Call self.AndroidPrimaryWeMoApp._selectMultipleDays(Weekday,"Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 140. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 141. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 142. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 143. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 144. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 145. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 146. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 147. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 148. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 149. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(960))["hour"]
+@@Step 150. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(960))["minute"]
+@@Step 151. Call StartTime_OFF_Weekdays = "%s:%s"%(StartHH,StartMM)
+@@Step 152. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 153. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 154. Call self.AndroidPrimaryWeMoApp._selectMultipleDays("Monday","Tuesday","Wednesday","Thursday","Friday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 155. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 156. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 157. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 158. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 159. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 160. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 161. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 162. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 163. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 164. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1500))["hour"]
+@@Step 165. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1500))["minute"]
+@@Step 166. Call StartTime_OFF_Weekends = "%s:%s"%(StartHH,StartMM)
+@@Step 167. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 168. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 169. Call self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 170. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 171. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 172. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 173. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 174. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 175. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 176. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 177. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 178. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 179. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1700))["hour"]
+@@Step 180. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1700))["minute"]
+@@Step 181. Call StartTime_OFF_Weekends_Not_Applied = "%s:%s"%(StartHH,StartMM)
+@@Step 182. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 183. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 184. Call self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 185. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 186. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 187. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 188. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 189. Call self.AndroidPrimaryWeMoApp._goToTheDevicesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 190. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 191. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 192. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 193. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._forgetAllWifiNetworkfromWifiSelectionPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 194. Call self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.PrimarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 195. Call self.AndroidPrimaryWeMoApp._syncTheTimeOnSmartDevice(CurrentYear,"Tomorrow");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 196. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 197. Call self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Weekends);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 198. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 199. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 200. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 201. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 202. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 203. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 204. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 205. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 206. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 207. Call self.AndroidPrimaryWeMoApp._syncTheTimeActualLocation(CurrentYear);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 208. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 209. Call if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Weekends_Not_Applied);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 210. Call if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 211. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 212. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 213. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 214. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 215. Call if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 216. Call if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 217. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 218. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 219. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 220. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 221. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 222. Call self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+@@Step 223. Call self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 224. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 225. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 226. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 227. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 228. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 229. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 230. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 231. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 233. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 234. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+
+1.self.AndroidPrimaryWeMoApp._unlockAndroid();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+2.self.AndroidPrimaryWeMoApp._selectTheWifiFromWifiManager(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+3.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+4.DEVICES_IN_NETWORK = []
+5.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+6.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+7.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+8.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+9.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+10.DEVICE_TYPE = []
+11.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER)
+12.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH)
+13.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH)
+14.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+15.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+16.DEVICE_SERIAL_NUMBER = []
+17.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+18.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+19.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+20.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+21.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+22.for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+23.for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+24.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+25.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+26.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+27.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+####################
+## CREATE  Rules -ON
+####################
+28.self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+29.self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##ON-Today-Sunday
+30.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+31.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+32.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+33.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+34.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+35.CurrentYear= self.util.getTimeInStringFormat(self.util.getCurrentTime())['year']
+36.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["hour"]
+37.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["minute"]
+38.StartTime_ON_Today_Sunday = "%s:%s"%(StartHH,StartMM)
+39.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+40.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+41.self.AndroidPrimaryWeMoApp._selectMultipleDays(Weekday,"Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+42.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+43.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+44.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+45.self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##ON-Weekdays
+46.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+47.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+48.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+49.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+50.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+51.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(360))["hour"]
+52.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(360))["minute"]
+53.StartTime_ON_Weekdays = "%s:%s"%(StartHH,StartMM)
+54.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+55.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+56.self.AndroidPrimaryWeMoApp._selectMultipleDays("Monday","Tuesday","Wednesday","Thursday","Friday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+57.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+58.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+59.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+60.self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##ON-Weekends
+61.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+62.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+63.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+64.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+65.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+66.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(800))["hour"]
+67.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(800))["minute"]
+68.StartTime_ON_Weekends = "%s:%s"%(StartHH,StartMM)
+69.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+70.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+71.self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+72.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+73.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+74.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+75.self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##ON-Weekends-Not-Applied
+76.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+77.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+78.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+79.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+80.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+81.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1100))["hour"]
+82.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1100))["minute"]
+83.StartTime_ON_Weekends_Not_Applied = "%s:%s"%(StartHH,StartMM)
+84.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+85.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+86.self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+87.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+88.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+89.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+90.self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+91.self.AndroidPrimaryWeMoApp._goToTheDevicesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+92.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+93.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##########################
+##  VERIFY THE Rules   ##
+##########################
+##VERIFY -ON_Today_Sunday
+## TIME SYNC SUNDAY ##
+##VERIFY-ON_Weekdays
+## TIME SYNC TOMORROW ##
+94.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+95.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._forgetAllWifiNetworkfromWifiSelectionPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+96.self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.PrimarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+97.self.AndroidPrimaryWeMoApp._syncTheTimeOnSmartDevice(CurrentYear,"Tomorrow");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+98.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+99.self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Weekdays);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+100.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+101.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+102.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+103.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+104.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+105.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+106.for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+107.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+108.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+109.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+110.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+111.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+112.self.AndroidPrimaryWeMoApp._syncTheTimeActualLocation(CurrentYear);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+113.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+114.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+115.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+116.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+##VERIFY-ON_Weekends
+## TIME SYNC SUNDAY ##
+##VERIFY-ON_Weekends_Not_Applied
+117.if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Weekends_Not_Applied);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+118.if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+119.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+120.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+121.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+122.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+123.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+124.if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+125.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+126.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+127.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+####################
+## CREATE  Rules -OFF
+####################
+##OFF-Today-Sunday
+128.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+129.self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+130.self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+131.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+132.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+133.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+134.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+135.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+136.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["hour"]
+137.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["minute"]
+138.StartTime_OFF_Today_Sunday = "%s:%s"%(StartHH,StartMM)
+139.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+140.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+141.self.AndroidPrimaryWeMoApp._selectMultipleDays(Weekday,"Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+142.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+143.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+144.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+145.self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##OFF-Weekdays
+146.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+147.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+148.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+149.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+150.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+151.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(360))["hour"]
+152.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(360))["minute"]
+153.StartTime_OFF_Weekdays = "%s:%s"%(StartHH,StartMM)
+154.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+155.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+156.self.AndroidPrimaryWeMoApp._selectMultipleDays("Monday","Tuesday","Wednesday","Thursday","Friday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+157.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+158.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+159.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+160.self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##OFF-Weekends
+161.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+162.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+163.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+164.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+165.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+166.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(800))["hour"]
+167.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(800))["minute"]
+168.StartTime_OFF_Weekends = "%s:%s"%(StartHH,StartMM)
+169.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+170.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+171.self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+172.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+173.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+174.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+175.self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##OFF-Weekends-Not-Applied
+176.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+177.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+178.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+179.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+180.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+181.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1100))["hour"]
+182.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(1100))["minute"]
+183.StartTime_OFF_Weekends_Not_Applied = "%s:%s"%(StartHH,StartMM)
+184.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+185.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+186.self.AndroidPrimaryWeMoApp._selectMultipleDays("Saturday","Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+187.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+188.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+189.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+190.self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+191.self.AndroidPrimaryWeMoApp._goToTheDevicesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+192.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+193.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##########################
+##  VERIFY THE Rules   ##
+##########################
+##VERIFY -OFF_Today_Sunday
+##TIME SYNC SUNDAY##
+$$PASSED TESTID:Rules/2
+##VERIFY-OFF_Weekdays
+## TIME SYNC TOMORROW ##
+194.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+195.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SecondarySmartPhoneName != None:self.AndroidPrimaryWeMoApp._forgetAllWifiNetworkfromWifiSelectionPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+196.self.AndroidPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.PrimarySmartPhoneName);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+197.self.AndroidPrimaryWeMoApp._syncTheTimeOnSmartDevice(CurrentYear,"Tomorrow");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+198.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+199.self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Weekends);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+200.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+201.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+202.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+203.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+204.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+205.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+206.for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+207.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+208.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+209.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+210.self.AndroidPrimaryWeMoApp._syncTheTimeActualLocation(CurrentYear);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+211.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+$$PASSED TESTID:Rules/3
+##VERIFY-OFF_Weekends
+##TIME SYNC SUNDAY##
+$$PASSED TESTID:Rules/4
+##VERIFY-OFF_Weekends_Not_Applied
+212.if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Weekends_Not_Applied);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+213.if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+214.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+215.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+216.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+217.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+218.if Weekday != "Sunday" and Weekday !="Saturday" and WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+219.if Weekday != "Sunday" and Weekday !="Saturday":self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+220.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+221.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+222.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+223.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+224.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@----------------------------
+@@ DELETE ALL Rules
+@@--------------------------
+225.self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+226.self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+227.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+228.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+229.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+230.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+231.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Today-Sunday");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+232.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Weekdays");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+233.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Weekends");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+234.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Weekends-Not-Applied");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+235.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+236.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+$$PASSED TESTID:Rules/5

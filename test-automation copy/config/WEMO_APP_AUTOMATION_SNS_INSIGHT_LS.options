@@ -1,0 +1,125 @@
+#Command Line Options: one on each new line
+#You can comment any options by placing a # in the first column
+#option-name;<string|bool|int>;<default-value>;<option help string>
+#debug;bool;false;to enable debugging use --debug
+run;string;CONTROL,DISCOVERY,SETUP,RULES;comma separated list "setup,rules"
+nosetup;bool;true;to not run the setup use --nosetup
+testcase;string;all;comma separated WeMo Service Test Cases: --testcase "testcase1,testcase2"
+positive;bool;false;to run only positive test cases use --positive
+negative;bool;false;to run only negative test cases use --negative
+debug;bool;false;To turn on the debug use --debug
+uploadreport;bool;true;to upload reports to report server, use: --uploadreport
+skip;string;;Comma-separated list of test cases to be skipped from running: --skip "xxx.steps,yyyy.steps,..."
+runtype;string;Sanity;to specify a run type use --runtype sanity
+noemail;bool;false;to not send an email --noemail
+appversion;string;1.16;--appversion "1.9"
+apprelease;string;wemostag22-endor.cx_ff54e15;--apprelease "1.9_abcdef"
+applink;string;https://app.lswf.net/ipa/EndorPlus/wemostag2-EndorPlus.i_8251b04.ipa; give the http link for the firmware for e.g.,  --applink <httpAppLink>
+lowerappversion;string;https://app.lswf.net/ipa/dagobah/wemostag2-dagobah.cq_d2aa900.ipa; give the app link  for e.g., --applink <httpAppLink>
+updateAppLink;bool;false;to not update the app use: --updateAppLink
+createGraph;bool;false;to not create the graph: --createGraph
+updateConfluence;bool;true;to not update Confluence: --updateConfluence
+runFailedTestCases;bool;false;to not run failed test cases: --runFailedTestCases
+
+#########################
+#WEMO DEVICE INFORMATION#
+#########################
+supporteddevicetype;string;Switch,SwitchV2,Motion,Insight,Light,Link,InsightV2,Maker,Dimmer,SlowCooker,Humidifier,HeaterA,HeaterB,AirPurifier,CoffeeMaker,Nest;comma separated list all Wemo Devices to be tested for e.g., --supporteddevicetype "Switch,Motion,Insight,Light"
+devicesinnetwork;string;Motion,Dimmer,SwitchV2;comma separated list all Wemo Devices to be tested for e.g., --devicesinnetwork "Switch,Motion,Insight,Light"
+serialnumber;string;Motion:221219L010102F,Dimmer:241634K1500372,SwitchV2:221632K010198E,InsightV2:231438K1200058,Insight:221402K1200BE9;give the comma separated list of serialnumbers of all WeMos to be tested for e.g.,  --serialnumber <sN1>,<sN2>,<sN3> etc
+bulbdeviceid;string;7A793100008D1500,00158D000031799D;give the comma separated list of bulb device id of all Led Bulbs to be tested for e.g.,  --bulbdeviceid <macAddr1>,<macAddr2>,<macAddr3> etc
+osram_regular_bulbdeviceid;string;000D6F00035FFC13,000D6F000341AFC6;give the comma separated list of bulb device id of all osram_regular_bulbdeviceid Bulbs to be tested for e.g.,  --osram_regular_bulbdeviceid <macAddr1>,<macAddr2>,<macAddr3> etc
+osram_ttb_bulbdeviceid;string;8418260000013062,841826000000C3D4;give the comma separated list of bulb device id of all osram_ttb_bulbdeviceid Bulbs to be tested for e.g.,  --osram_ttb_bulbdeviceid <macAddr1>,<macAddr2>,<macAddr3> etc
+osram_flex_bulbdeviceid;string;841826000000C48D,841826000000C474;give the comma separated list of bulb device id of all osram_flex_bulbdeviceid Bulbs to be tested for e.g.,  --osram_flex_bulbdeviceid <macAddr1>,<macAddr2>,<macAddr3> etc
+osram_gardenspot_bulbdeviceid;string;841826000000D6BE,841826000000D956;give the comma separated list of bulb device id of all osram_gardenspot_bulbdeviceid Bulbs to be tested for e.g.,  --osram_gardenspot_bulbdeviceid <macAddr1>,<macAddr2>,<macAddr3> etc
+collectseriallogs;bool;false;to collect the serial logs of the devices use: --collectseriallogs
+comportofdevice;string;4,5,6,7;give the comma separated list of comportofdevice of all WeMos to be tested for e.g.,  --comportofdevice <1>,<2>,<3> etc
+
+##################
+#NEST INFORMATION#
+##################
+nestusername;string;automationnestqa@gmail.com;--nestusername "automation"
+nestpassword;string;Belkin@123;--nestpassword "belkin123"
+nestlabel;string;451B;--nestlabel "A543"
+nestfriendlyname;string;Basement;--nestfriendlyname "Basement"
+
+
+#####################
+#NETWORK INFORMATION#
+#####################
+localrouterssid;string;AutoIOS;--localrouterssid "local-ssid"
+localrouterpassword;string;belkin123;--localrouterpassword "local-password"
+  localroutermacaddress;string;94:44:52:BA:F9:5F;--localroutermacaddress "EC:1A:59:4B:E1:A4"
+
+remoterouterssid;string;Auto_Belkin2_Android;--remoterouterssid "remote-ssid"
+remoterouterpassword;string;belkin123;--remoterouterpassword "remote-password"
+no_wan_routerssid;string;Auto_Belkin2_NoWAN;--localrouterssid "local-ssid"
+no_wan_routerpassword;string;belkin123;--localrouterpassword "local-password"
+no_wan_routersecurity;string;WPA2;--localroutersecurity "WPA2"
+no_wan_remoterouterpassword;string;belkin123;--localrouterpassword "local-password"
+no_wan_remoteroutersecurity;string;WPA2;--localroutersecurity "WPA2"
+wifiinterface;string;Wireless Network Connection;--wifiinterface "Wireless Network Connection”÷’] 
+
+#####################
+#WEMO APP ENVIRONMENT#
+######################
+environment;string;STG;--environment "STG"
+#######################
+#######################
+#FIRMWARE UPGRADE INFO#
+#######################
+upgradefirmware;bool;false;to not upgrade firmware use --upgradefirmware
+#######################
+
+
+#SMART PHONE DEVICE INFORMATION#
+################################
+smartdevice;string;iOS;--smartdevice "iOS"
+smartdevice_osversion;string;9.3.5;--smartdevice_osversion "7.1.2"
+primarysmartphone;string;ios_app:iPod touch;--primarysmartphone "primarySmartPhoneName"
+secondarysmartphone;string;;--secondarysmartphone "secondarySmartPhoneName"
+smartphoneport;string;8889;--smartphoneport "8889"
+smartDeviceDescription;string;iPhone;--smartDeviceDescription "iPhone Automation"
+secondarysmartphoneDescription;string;;--secondarysmartphoneDescription "iPhone Automation"
+###############################
+######################
+#WEMO_CONTROLLER_INFO#
+######################
+wemocontrollerserialnumber;string;221229K01007CC;--wemocontrollerserialnumber "221251K0103BDD"
+######################
+#####################
+#DUT CONTROLLER INFO#
+#####################
+dutcontrollerserialnumber;string;221424K0101E40;--dutcontrollerserialnumber "221251K0103BDD"
+#####################
+#######################
+#Motion Simulator INFO#
+#######################
+motionsimulatorserialnumber;string;221201K010017A;--motionsimulatorserialnumber "221251K0103BDD"
+#######################
+######################
+#Bulb Controller INFO#
+######################
+bulbcontrollerserialnumber;string;221201K010052A,221239K0101AF2;--bulbcontrollerserialnumber "221251K0103BDD"
+#######################
+######################
+#Osram  Regular Controller INFO#
+######################
+osram_regular_bulbcontrollerserialnumber;string;221212K010036F,221302K0100F8B;--bulbcontrollerserialnumber "221251K0103BDD"
+#######################
+######################
+#Osram  ttb Controller INFO#
+######################
+osram_ttb_bulbcontrollerserialnumber;string;221212K010036F,221302K0100F8B;--bulbcontrollerserialnumber "221251K0103BDD"
+#######################
+######################
+#Osram  flex Controller INFO#
+######################
+osram_flex_bulbcontrollerserialnumber;string;221212K010036F,221302K0100F8B;--bulbcontrollerserialnumber "221251K0103BDD"
+#######################
+######################
+#Osram  garden Controller INFO#
+######################
+
+
+   

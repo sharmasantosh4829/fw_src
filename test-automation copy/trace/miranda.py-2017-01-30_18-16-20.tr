@@ -1,0 +1,207 @@
+DEBUG:root:2017-01-30_18-16-22: tempDir:  C:\Users\Santosh-admin\Documents\test-automation\temp 
+DEBUG:root:2017-01-30_18-16-22: LogDir:  C:\Users\Santosh-admin\Documents\test-automation\logs 
+DEBUG:root:2017-01-30_18-16-22: zipFP:  <zipfile.ZipFile object at 0x029DDE70> 
+DEBUG:root:2017-01-30_18-16-22: LogDir:  C:\Users\Santosh-admin\Documents\test-automation\logs 
+DEBUG:root:2017-01-30_18-16-22: root:  . 
+DEBUG:root:2017-01-30_18-16-22: folders:  [] 
+DEBUG:root:2017-01-30_18-16-22: files:  [] 
+WARNING:root:2017-01-30_18-16-22: Deleting the empty archive file 'WeMo_App_Automation_Discarded_Files-2017-01-30_18-16-22.zip' 
+DEBUG:root:2017-01-30_18-16-22: cmdOptions {'dutcontrollerserialnumber': '221424K0101E40', 'nestfriendlyname': 'Basement', 'no_wan_routersecurity': 'WPA2', 'smartDeviceDescription': 'iPhone', 'skip': '', 'devicesinnetwork': 'Motion,Dimmer,SwitchV2', 'serialnumber': 'Motion:221219L010102F,Dimmer:241634K1500372,SwitchV2:221632K010198E,InsightV2:231438K1200058,Insight:221402K1200BE9', 'osram_ttb_bulbdeviceid': '8418260000013062,841826000000C3D4', 'lowerappversion': 'https://app.lswf.net/ipa/dagobah/wemostag2-dagobah.cq_d2aa900.ipa', 'osram_gardenspot_bulbcontrollerserialnumber': '221212K010036F,221302K0100F8B', 'primarysmartphone': 'ios_app:iPod touch', 'supporteddevicetype': 'Switch,SwitchV2,Motion,Insight,Light,Link,InsightV2,Maker,Dimmer,SlowCooker,Humidifier,HeaterA,HeaterB,AirPurifier,CoffeeMaker,Nest', 'osram_flex_bulbcontrollerserialnumber': '221212K010036F,221302K0100F8B', 'nestlabel': '451B', 'osram_regular_bulbcontrollerserialnumber': '221212K010036F,221302K0100F8B', 'remoterouterpassword': 'belkin123', 'environment': 'STG', 'localrouterssid': 'AutoIOS', 'no_wan_remoterouterpassword': 'belkin123', 'positive': False, 'osram_gardenspot_bulbdeviceid': '841826000000D6BE,841826000000D956', 'secondarysmartphoneDescription': '', 'localroutermacaddress': '94:44:52:BA:F9:5F', 'nestpassword': 'Belkin@123', 'applink': 'https://app.lswf.net/ipa/EndorPlus/wemostag2-EndorPlus.i_8251b04.ipa', 'run': 'CONTROL,DISCOVERY,SETUP,RULES', 'wifiinterface': 'Wireless Network Connection', 'comportofdevice': '4,5,6,7', 'updateAppLink': False, 'no_wan_routerpassword': 'belkin123', 'nestusername': 'automationnestqa@gmail.com', 'no_wan_remoteroutersecurity': 'WPA2', 'smartdevice_osversion': '9.3.5', 'osram_flex_bulbdeviceid': '841826000000C48D,841826000000C474', 'appversion': '1.16', 'smartdevice': 'iOS', 'wemocontrollerserialnumber': '221229K01007CC', 'motionsimulatorserialnumber': '221201K010017A', 'remoterouterssid': 'Auto_Belkin2_Android', 'localrouterpassword': 'belkin123', 'bulbdeviceid': '7A793100008D1500,00158D000031799D', 'negative': False, 'runtype': 'Sanity', 'no_wan_routerssid': 'Auto_Belkin2_NoWAN', 'osram_ttb_bulbcontrollerserialnumber': '221212K010036F,221302K0100F8B', 'apprelease': 'wemostag22-endor.cx_ff54e15', 'createGraph': False, 'secondarysmartphone': '', 'noemail': False, 'uploadreport': True, 'smartphoneport': '8889', 'runFailedTestCases': False, 'bulbcontrollerserialnumber': '221201K010052A,221239K0101AF2', 'testcase': 'all', 'upgradefirmware': False, 'localroutersecurity': 'WPA2', 'no_wan_remote_routerssid': 'Auto_Belkin2_NoWAN', 'updateConfluence': True, 'collectseriallogs': False, 'nosetup': True, 'debug': False, 'osram_regular_bulbdeviceid': '000D6F00035FFC13,000D6F000341AFC6'} 
+DEBUG:root:2017-01-30_18-16-22: cmdArgs [] 
+DEBUG:root:2017-01-30_18-16-51: email sent successfully 
+DEBUG:root:2017-01-30_18-19-55: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetMetaInfoResponse xmlns:u="urn:Belkin:service:metainfo:1">
+<MetaInfo>08863B6F68C8|221219L010102F|Plugin Device|WeMo_WW_2.00.10885.DVT-OWRT-SNS|WeMo.Motion.02F|Sensor</MetaInfo>
+</u:GetMetaInfoResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-19-55: 200 
+DEBUG:root:2017-01-30_18-19-55: 08863B6F68C8|221219L010102F|Plugin Device|WeMo_WW_2.00.10885.DVT-OWRT-SNS|WeMo.Motion.02F|Sensor 
+DEBUG:root:2017-01-30_18-21-31: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetMetaInfoResponse xmlns:u="urn:Belkin:service:metainfo:1">
+<MetaInfo>6038E05975BD|221632K010198E|Plugin Device|WeMo_WW_2.00.10936.DVT-OWRT-SNSV2|Wemo.Mini.98E|Socket</MetaInfo>
+</u:GetMetaInfoResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-21-31: 200 
+DEBUG:root:2017-01-30_18-21-31: 6038E05975BD|221632K010198E|Plugin Device|WeMo_WW_2.00.10936.DVT-OWRT-SNSV2|Wemo.Mini.98E|Socket 
+DEBUG:root:2017-01-30_18-21-31: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetMetaInfoResponse xmlns:u="urn:Belkin:service:metainfo:1">
+<MetaInfo>149182D744EA|241634K1500372|Plugin Device|WeMo_WW_2.00.10935.DVT-OWRT-Dimmer|Wemo.Dimmer.372|Dimmer</MetaInfo>
+</u:GetMetaInfoResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-21-31: 200 
+DEBUG:root:2017-01-30_18-21-31: 149182D744EA|241634K1500372|Plugin Device|WeMo_WW_2.00.10935.DVT-OWRT-Dimmer|Wemo.Dimmer.372|Dimmer 
+DEBUG:root:2017-01-30_18-23-02: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetHomeIdResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<HomeId>700722329</HomeId>
+<DeviceId>40f17611a27202bfcd47e9721ff4fca257e04d46</DeviceId>
+</u:GetHomeIdResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-02: 200 
+DEBUG:root:2017-01-30_18-23-02: 700722329 
+DEBUG:root:2017-01-30_18-23-02: 40f17611a27202bfcd47e9721ff4fca257e04d46 
+DEBUG:root:2017-01-30_18-23-05: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:SetFriendlyNameResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<FriendlyName>WeMo_02F</FriendlyName>
+</u:SetFriendlyNameResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-05: 200 
+DEBUG:root:2017-01-30_18-23-05: WeMo_02F 
+DEBUG:root:2017-01-30_18-23-06: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetHomeIdResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<HomeId>700722329</HomeId>
+<DeviceId>4d4bd6748f877b4fceab3a30f931e83fafc7d00e</DeviceId>
+</u:GetHomeIdResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-06: 200 
+DEBUG:root:2017-01-30_18-23-06: 700722329 
+DEBUG:root:2017-01-30_18-23-06: 4d4bd6748f877b4fceab3a30f931e83fafc7d00e 
+DEBUG:root:2017-01-30_18-23-09: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:SetBinaryStateResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<BinaryState>Error</BinaryState>
+</u:SetBinaryStateResponse>
+<s:Fault>
+<faultcode>s:Client</faultcode>
+<faultstring>UPnPError</faultstring>
+<detail>
+<UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+<errorCode>600</errorCode>
+<errorDescription>Argument Value Invalid</errorDescription>
+</UPnPError>
+</detail>
+</s:Fault>
+</s:Body>
+</s:Envelope>
+ 
+DEBUG:root:2017-01-30_18-23-09: 200 
+DEBUG:root:2017-01-30_18-23-09: Error 
+DEBUG:root:2017-01-30_18-23-09: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetBinaryStateResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<BinaryState>0</BinaryState>
+</u:GetBinaryStateResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-09: 200 
+DEBUG:root:2017-01-30_18-23-09: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:SetFriendlyNameResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<FriendlyName>WeMo_98E</FriendlyName>
+</u:SetFriendlyNameResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-09: 200 
+DEBUG:root:2017-01-30_18-23-09: WeMo_98E 
+DEBUG:root:2017-01-30_18-23-09: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetHomeIdResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<HomeId>700722329</HomeId>
+<DeviceId>40f17611a27202bfcd47e9721ff4fca257e04d46</DeviceId>
+</u:GetHomeIdResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-09: 200 
+DEBUG:root:2017-01-30_18-23-09: 700722329 
+DEBUG:root:2017-01-30_18-23-09: 40f17611a27202bfcd47e9721ff4fca257e04d46 
+DEBUG:root:2017-01-30_18-23-12: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:SetBinaryStateResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<BinaryState>Error</BinaryState>
+</u:SetBinaryStateResponse>
+<s:Fault>
+<faultcode>s:Client</faultcode>
+<faultstring>UPnPError</faultstring>
+<detail>
+<UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+<errorCode>600</errorCode>
+<errorDescription>Argument Value Invalid</errorDescription>
+</UPnPError>
+</detail>
+</s:Fault>
+</s:Body>
+</s:Envelope>
+ 
+DEBUG:root:2017-01-30_18-23-12: 200 
+DEBUG:root:2017-01-30_18-23-12: Error 
+DEBUG:root:2017-01-30_18-23-12: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetBinaryStateResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<BinaryState>0</BinaryState>
+<brightness>100</brightness>
+<fader>300:-1:1:0:100</fader>
+</u:GetBinaryStateResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-12: 200 
+DEBUG:root:2017-01-30_18-23-12: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:SetFriendlyNameResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<FriendlyName>Wemo_372</FriendlyName>
+</u:SetFriendlyNameResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-23-12: 200 
+DEBUG:root:2017-01-30_18-23-12: Wemo_372 
+DEBUG:root:2017-01-30_18-28-46: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:SetBinaryStateResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<BinaryState>Error</BinaryState>
+</u:SetBinaryStateResponse>
+<s:Fault>
+<faultcode>s:Client</faultcode>
+<faultstring>UPnPError</faultstring>
+<detail>
+<UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+<errorCode>600</errorCode>
+<errorDescription>Argument Value Invalid</errorDescription>
+</UPnPError>
+</detail>
+</s:Fault>
+</s:Body>
+</s:Envelope>
+ 
+DEBUG:root:2017-01-30_18-28-46: 200 
+DEBUG:root:2017-01-30_18-28-46: Error 
+DEBUG:root:2017-01-30_18-28-46: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:SetBinaryStateResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<BinaryState>Error</BinaryState>
+</u:SetBinaryStateResponse>
+<s:Fault>
+<faultcode>s:Client</faultcode>
+<faultstring>UPnPError</faultstring>
+<detail>
+<UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+<errorCode>600</errorCode>
+<errorDescription>Argument Value Invalid</errorDescription>
+</UPnPError>
+</detail>
+</s:Fault>
+</s:Body>
+</s:Envelope>
+ 
+DEBUG:root:2017-01-30_18-28-46: 200 
+DEBUG:root:2017-01-30_18-28-46: Error 
+DEBUG:root:2017-01-30_18-31-16: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetFriendlyNameResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<FriendlyName>WeMo_02F</FriendlyName>
+</u:GetFriendlyNameResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-31-16: 200 
+DEBUG:root:2017-01-30_18-38-55: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:ReSetupResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<Reset>success</Reset>
+</u:ReSetupResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-38-55: 200 
+DEBUG:root:2017-01-30_18-38-55: success 
+DEBUG:root:2017-01-30_18-40-05: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:SetFriendlyNameResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<FriendlyName>WeMo_02F</FriendlyName>
+</u:SetFriendlyNameResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-40-05: 200 
+DEBUG:root:2017-01-30_18-40-05: WeMo_02F 
+DEBUG:root:2017-01-30_18-40-05: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:GetFriendlyNameResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<FriendlyName>WeMo_02F</FriendlyName>
+</u:GetFriendlyNameResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-40-05: 200 
+DEBUG:root:2017-01-30_18-40-05: <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>
+<u:ReSetupResponse xmlns:u="urn:Belkin:service:basicevent:1">
+<Reset>success</Reset>
+</u:ReSetupResponse>
+</s:Body> </s:Envelope> 
+DEBUG:root:2017-01-30_18-40-05: 200 
+DEBUG:root:2017-01-30_18-40-05: success 

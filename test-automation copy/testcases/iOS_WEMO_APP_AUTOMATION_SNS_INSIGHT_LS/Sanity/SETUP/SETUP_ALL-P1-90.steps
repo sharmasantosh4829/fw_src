@@ -1,0 +1,132 @@
+@@TestID:SANITY/90
+@@Title:SANITY/90: As a result of fallback to the (remembered) Setup Router AP during WeMo Device pairing,WeMo App(unregistered) registration should happen on user operation (manual) without using ReUnion key logic in case WeMo Device discovery after pairing doesn&apos;t happens within 2 minutes after AP mode closure
+@@Type:POSITIVE
+@@Description:SANITY/90: As a result of fallback to the (remembered) Setup Router AP during WeMo Device pairing,WeMo App(unregistered) registration should happen on user operation (manual) without using ReUnion key logic in case WeMo Device discovery after pairing doesn&apos;t happens within 2 minutes after AP mode closure
+@@deviceType:ALL
+@@PRIORITY: P1
+@@----------------------------------------
+@@TEST LINK TEST STEPS - SANITY/90
+@@----------------------------------------
+@@ Step 1. Select the SSID of the WeMo Device from Smart Device _x0019_s Wi-Fi settings.
+@@ Expected Result : Verify that WeMo Devices is selected in Wi-Fi settings and a Wi-Fi logo will appear at left top on SmartDevice Screen.
+@@ Step 2. Launch the New WeMo App (UNREGISTERED).
+@@ Expected Result : Verify that WeMo App should show the _x001C_Personalize Page _x001D_ having options for customizing name/icon.
+@@ Step 3. Customize the name and icon of WeMo Device and make sure &quot;Remember Wi-Fi Option&quot; is checked.
+@@ Expected Result : Verify the name and icon is customized successfully for WeMo Device.
+@@ Step 4. Click on &quot;Proceed&quot; button, after customizing the name and icon of WeMo Device.
+@@ Expected Result : WeMo App should navigate to &quot;Select Your Wi-Fi&quot; Screen with list of router in the vicinity of WeMo Device.
+@@ Step 5. Select Home Router(SECURE) to which WeMo Device need to be paired &#10;and enter the password in _x001C_Enter Password _x001D_ screen and press on &quot;Join&quot;.Validate text during Setup.
+@@ Expected Result : Verify that there should be automatic fallback to Home Router and App navigates to Device screen showing the WeMo Device paired.
+@@ Step 6. Now plugged out the WeMo Device from the electrical socket.
+@@ Expected Result : Verify that after some time the app should display the popup &quot;We&apos;ve lost connection with the WeMo device. Please quit this app, reconnect to the WeMo network, and reopen this app.
+@@ Step 7. After 2 mins plug in the WeMo Device again in the electrical socket.
+@@ Expected Result : Local Discovery of the WeMo Device should happen and Remote Access should remain disabled (No ReUnioun key logic is used during WeMo DeviceDiscovery &amp; No pop up is received)
+
+@@ ---------------------------
+@@ Automation Call Steps
+@@ ---------------------------
+
+@@#############################################################
+@@ Uninstalling and installing the WeMo app
+@@#############################################################
+1.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.PrimarySmartPhoneName != None: self.iOSPrimaryWeMoApp._setDeviceUnderTest(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.PrimarySmartPhoneName);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+2.self.iOSPrimaryWeMoApp._uninstallWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall)
+3.IOS_WEMO_IPA_FILE = self.wemoAppHttpUtility.download(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.APP_LINK,"belkin","belkin123",os.path.join(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath("self.py")), os.pardir)), "temp", os.path.basename(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.APP_LINK)))
+4.self.iOSPrimaryWeMoApp._installWemoApp(IOS_WEMO_IPA_FILE);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+5.self.iOSPrimaryWeMoApp._checkAndEnableRemoteAccess(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+6.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+
+#############################################################
+## GATHERING THE FRIENDLY NAMES OF WEMO DEVICES UNDER TEST ##
+#############################################################
+7.FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST=[]
+8.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+9.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+10.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+11.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+12.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+13.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION in self.WemoDevice:FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+
+#############################################################
+## GATHERING THE SERIAL NOs OF WEMO DEVICES UNDER TEST     ##
+#############################################################
+14.SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST=[]
+15.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+16.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+17.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+18.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+19.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+20.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION in self.WemoDevice:SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+
+#############################################################
+## GATHERING THE DEVICE_TYPE OF WEMO DEVICES UNDER TEST
+#############################################################
+21.WEMO_DEVICE_TYPE = []
+22.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:WEMO_DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH)
+23.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:WEMO_DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH)
+24.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:WEMO_DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+25.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:WEMO_DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2)
+26.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:WEMO_DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER)
+27.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION in self.WemoDevice:WEMO_DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION)
+
+###################################################
+## GATHERING THE SMART_PHONE_SSID_NAMES         ###
+###################################################
+28.SMART_PHONE_SSID_NAME = []
+29.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.devicesInNetwork:SMART_PHONE_SSID_NAME.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSmartPhoneSsidName])
+30.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.devicesInNetwork:SMART_PHONE_SSID_NAME.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSmartPhoneSsidName])
+31.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.devicesInNetwork:SMART_PHONE_SSID_NAME.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSmartPhoneSsidName])
+32.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.devicesInNetwork:SMART_PHONE_SSID_NAME.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSmartPhoneSsidName])
+33.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.devicesInNetwork:SMART_PHONE_SSID_NAME.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSmartPhoneSsidName])
+34.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION in self.devicesInNetwork:SMART_PHONE_SSID_NAME.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSmartPhoneSsidName])
+
+
+###################################################
+## GATHERING THE WeMODevices_MAC                ###
+###################################################
+35.WEMO_DEVICE_WIRELESS_MAC = []
+36.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:WEMO_DEVICE_WIRELESS_MAC.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoWirelessMac])
+37.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:WEMO_DEVICE_WIRELESS_MAC.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoWirelessMac])
+38.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:WEMO_DEVICE_WIRELESS_MAC.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoWirelessMac])
+39.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:WEMO_DEVICE_WIRELESS_MAC.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoWirelessMac])
+40.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:WEMO_DEVICE_WIRELESS_MAC.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoWirelessMac])
+41.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION in self.WemoDevice:WEMO_DEVICE_WIRELESS_MAC.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MOTION][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoWirelessMac])
+
+############################################
+###     HARDRESETING the device
+############################################
+42.self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST[1],"OFF",self.routerIp,WEMO_DEVICE_TYPE[1],Feature = "HARDRESET");self.VerifyEqual(self.wemoAppUtility.result,True)
+43.time.sleep(40)
+
+
+@@###################### Pairing the device after turning off the switch ##############
+
+44.self.iOSPrimaryWeMoApp._forgetAllWifiNetworkfromWifiSelectionPage();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+45.self.iOSPrimaryWeMoApp._goToTheSettingsPageandSelectTheWifi(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+46.friendlyName = "myNewName"
+47.self.iOSPrimaryWeMoApp._verifySetupEdgeConditions_AndSetup(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier,SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST[1],SMART_PHONE_SSID_NAME[1],friendlyName,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_DEVICE_TYPE[1],wifiinterface = WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,forgetwififromsettingspage=False,uncheckRememberWiFiSettings=True,verifyWrongPasswordScenario=False,verifyHomeRouterOffScenario=False,verifyWeMoOffScenario = True,setup = False);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+48.self.wemoAppUtility.turnOffController(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WEMO_CONTROLLER_SSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE)
+49.time.sleep(30)
+#4.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+50.self.iOSPrimaryWeMoApp._wemoCouldNotConnectToWiFiPopUp();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+51.time.sleep(90)
+52.self.wemoAppUtility.turnOnController(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WEMO_CONTROLLER_SSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE)
+53.time.sleep(30)
+54.self.wemoAppUtility.connectToRouter(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,interface=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE);self.VerifyEqual(self.wemoAppUtility.result,True)
+55.self.iOSPrimaryWeMoApp.setupWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier,SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST[1],SMART_PHONE_SSID_NAME[1],friendlyName,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_DEVICE_TYPE[1],wifiinterface = WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,forgetwififromsettingspage=False,uncheckRememberWiFiSettings=False,email_opt_screen = True,want_email_promos = False);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+56.self.wemoAppUtility.connectToRouter(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,interface=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE);self.VerifyEqual(self.wemoAppUtility.result,True)
+
+
+@@###################### Closing and exiting ######################
+57.ipOfDevice = self.wemoUpnp.callssdp(SERIAL_NOS_OF_WEMODEVICES_AVAILABLE_FOR_TEST[1],localIP=self.routerIp)
+58.self.wemoUpnp.changeFriendlyName(FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST[1],ipOfDevice)
+#57.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#58.self.iOSPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifier);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#59.self.iOSPrimaryWeMoApp._clickOnEditDeviceTab();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#60.self.iOSPrimaryWeMoApp._goToTheEditDevicePageOfWemo(friendlyName);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#61.self.iOSPrimaryWeMoApp._editTheNameOfWemo(SMART_PHONE_SSID_NAME[1],friendlyName,FRIENDLY_NAME_OF_WEMODEVICES_AVAILABLE_FOR_TEST[1]);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#62.self.iOSPrimaryWeMoApp._confirmChangesOnEditDevicePage();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#63.time.sleep(60)
+#64.self.iOSPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.IOSAppIdentifierForUninstall);self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+#65.self.iOSPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.iOSPrimaryWeMoApp.result,True)
+$$PASSED TESTID:SANITY/90

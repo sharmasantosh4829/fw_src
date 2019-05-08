@@ -1,0 +1,306 @@
+@@TestID:Rules/1
+@@Title:Rules/1:WeMo Device should get turned ON/OFF once Simple Rule created for Today gets triggered as per configured time & action followed by no status change on rule deletion
+@@Type:POSITIVE
+@@Description:Rules/1:WeMo Device should get turned ON/OFF once Simple Rule created for Today gets triggered as per configured time & action followed by no status change on rule deletion
+@@deviceType:Switch,Insight,Light,InsightV2,Maker,SwitchV2
+@@Priority:P0
+@@-----------------------------------------------
+@@TEST LINK TEST STEPS Rules/1
+@@-----------------------------------------------
+@@Step 1. Connect the SmartDevice(S1) to the Home Router and launch the WeMo App.
+@@Expected Result : All the WeMo Devices paired with Home Router are displayed in the Devices Screen
+@@Step 2. Tap on the 'Rules' tab on SmartDevice(S1) and select the option to create a Simple rule on Multiple Switches- "CONTROL A DEVICE - By time, sunrise/sunset".
+@@Expected Result : The 'New Timer Rule' screen is displayed.
+@@Step 3. Configure Simple Rule(1st) as below :
+@@         Turn ON/OFF :<Switch1,2..N> ON
+@@         When : ON <Select Time>
+@@         Days :<today>
+@@         Rule Name : ON-Today
+@@        Tap on the Save Button and verify Rule Details screen
+@@Expected Result : 'ON-Today' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1) and should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 4. Launch SmartDevice(S2) on Remote Wi-Fi Router and Go to Rules Screen.
+@@Expected Result : Rule created in STEP-3 should be visible remotely on SmartDevice(S2) .
+@@Step 5. At time specified for "ON-Today", check if <Switch1,2..N> are turned ON and verify the Device status on SmartDevice(S1-Local) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "ON-Today" should get turned ON at the time specified in the rule and WeMo App Devices screen should show toggle button status as ON on SmartDevice(S1-Local) and SmartDevice(S2-Remote)
+@@Step 6. Now Launch SmartDevice(S1) on Remote Wi-Fi and create SimpleRule(2nd) to Turn OFF all WeMo Switches (turn ON state as of now):
+@@         Turn ON/OFF :<Switch1,2..N> OFF
+@@         When : OFF <Select Time>
+@@         Days :<today>
+@@         Rule Name : SimpleRule-OFF
+@@Expected Result : 'SimpleRule-OFF' gets saved in Enabled state and should be reflected with correct values in Rule Details screen on SmartDevice(S1).Also SmartDevice(S1) should show 2 Simple Rules now i.e 'ON-Today' and 'SimpleRule-OFF' and Rules should be saved correctly in Rules.DB file of associated WeMo Device
+@@Step 7. Verify the Rule Screen on SmartDevice(S2) before rule gets activated.
+@@Expected Result : SmartDevice(S2) should reflect 2 Rules 'ON-Today' and 'SimpleRule-OFF' as configured using SmartDevice(S1)
+@@Step 8. At time specified for "SimpleRule-OFF", check if <Switch1,2..N> are turned OFF and verify the Device status on SmartDevice(S1-Remote) and SmartDevice(S2-Remote).
+@@Expected Result : All <Switch1,2..N> participating in "SimpleRule-OFF" should get turned OFF at the time specified in the rule and WeMo App Devices screen should show toggle button status as OFF on SmartDevice(S1-Remote) and SmartDevice(S2-Remote)
+@@Step 9. While SmartDevices(S1/S2) is on REMOTE delete "SimpleRule-OFF" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule "SimpleRule-OFF" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Devices FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@Step 10.Launch SmartDevice(S1) locally while SmartDevice(S2) is on REMOTE.Delete "ON-Today" from SmartDevice(S1) and verify WeMo Device status as well as Rule Screen on SmartDevices(S1/S2)
+@@Expected Result : Rule screen should become empty .Rule "ON-Today" should no longer be visible on SmartDevices(S1/S2) and should also gets deleted from associated WeMo Device FW(Rules.db).Also WeMo Device status(OFF) should remain unchanged.
+@@------------------------------------
+@@AUTOMATION FUNCTION CALLS STEPS
+@@------------------------------------
+@@Step 01. Call self.AndroidPrimaryWeMoApp._unlockAndroid();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 02. Call self.AndroidPrimaryWeMoApp._selectTheWifiFromWifiManager(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 03. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 04. Call DEVICES_IN_NETWORK = []
+@@Step 05. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 06. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 07. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 08. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 09. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+@@Step 10. Call DEVICE_TYPE = []
+@@Step 11. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER)
+@@Step 12. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH)
+@@Step 13. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH)
+@@Step 14. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+@@Step 15. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+@@Step 16. Call DEVICE_SERIAL_NUMBER = []
+@@Step 17. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 18. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 19. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 20. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 21. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+@@Step 22. Call for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 23. Call for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 24. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 25. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 26. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+@@Step 27. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 28. Call self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+@@Step 29. Call self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 30. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 31. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 32. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 33. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 34. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 35. Call Tomorrow= self.util.getTimeInStringFormat(self.util.addSecondsToTime(86400))['weekday']
+@@Step 36. Call CurrentYear= self.util.getTimeInStringFormat(self.util.getCurrentTime())['year']
+@@Step 37. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(600))["hour"]
+@@Step 38. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(600))["minute"]
+@@Step 39. Call StartTime_ON_Today = "%s:%s"%(StartHH,StartMM)
+@@Step 40. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 41. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 42. Call self.AndroidPrimaryWeMoApp._selectIndividualDay(Weekday);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 43. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 44. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 45. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 46. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 47. Call for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME='ON-Today');self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 48. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 49. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 50. Call self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Today);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 51. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 52. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 53. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 54. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 55. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 56. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 57. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 58. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 59. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 60. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 61. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 62. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 63. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 64. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 65. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"ON",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 66. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 67. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 68. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 69. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 70. Call self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+@@Step 71. Call self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 72. Call for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 73. Call self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 74. Call self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 75. Call Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+@@Step 76. Call StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(600))["hour"]
+@@Step 77. Call StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(600))["minute"]
+@@Step 78. Call StartTime_OFF_Today = "%s:%s"%(StartHH,StartMM)
+@@Step 79. Call self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 80. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 81. Call self.AndroidPrimaryWeMoApp._selectIndividualDay(Weekday);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 82. Call self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 83. Call self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 84. Call self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 85. Call self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 86. Call for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME='OFF-Today');self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 87. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 88. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 89. Call self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Today);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 90. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 91. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 92. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 93. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 94. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 95. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 96. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 97. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 98. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 99. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 100. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 101. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+@@Step 102. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 103. Call if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 104. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 105. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 106. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 107. Call for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@Step 108. Call self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 109. Call self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+@@Step 110. Call self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 111. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 112. Call self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 113. Call self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 114. Call self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@Step 115. Call for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME="ON-Today");self.VerifyEqual(self.wemoAppUtility.result,False)
+@@Step 116. Call for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME="OFF-Today");self.VerifyEqual(self.wemoAppUtility.result,False)
+
+
+1.self.AndroidPrimaryWeMoApp._unlockAndroid();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+2.self.AndroidPrimaryWeMoApp._selectTheWifiFromWifiManager(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+3.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+4.DEVICES_IN_NETWORK = []
+5.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+6.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+7.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+8.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+9.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+10.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:DEVICES_IN_NETWORK.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName])
+11.DEVICE_TYPE = []
+12.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER)
+13.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH)
+14.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH)
+15.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT)
+16.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2)
+17.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:DEVICE_TYPE.append(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2)
+18.DEVICE_SERIAL_NUMBER = []
+19.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+20.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+21.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+22.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+23.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+24.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:DEVICE_SERIAL_NUMBER.append(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber])
+
+25.for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._verifyWemoDeviceInDeviceListContainer(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+26.for DEVICES in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._turnOffWemo(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(DEVICES);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+27.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+28.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+29.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoSerialNumber],"OFF",self.routerIp,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER,"Sensor Not Triggered")
+30.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice and self.wemoAppUtility.result != True:self.AndroidPrimaryWeMoApp._screenCapture();self.VerifyEqual(self.wemoAppUtility.result,True)
+####################
+## CREATE  Rules -ON
+####################
+## ON-Today
+31.self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+32.self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+33.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+34.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+35.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("on");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+36.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+37.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+38.Tomorrow= self.util.getTimeInStringFormat(self.util.addSecondsToTime(86400))['weekday']
+39.CurrentYear= self.util.getTimeInStringFormat(self.util.getCurrentTime())['year']
+40.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["hour"]
+41.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["minute"]
+42.StartTime_ON_Today = "%s:%s"%(StartHH,StartMM)
+43.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+44.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+45.self.AndroidPrimaryWeMoApp._selectIndividualDay(Weekday);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+46.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+47.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("ON-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+48.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+49.self.AndroidPrimaryWeMoApp._verifyRuleCreated("ON-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@RULESDB
+50.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME='ON-Today');self.VerifyEqual(self.wemoAppUtility.result,True)
+##########################
+##  VERIFY THE Rules   ##
+##########################
+##VERIFY -ON_Today
+51.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+52.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+53.self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_ON_Today);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+54.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+55.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+56.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+57.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+58.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+59.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+60.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+61.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+62.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+63.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+64.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+65.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+66.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+67.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+68.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+69.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOn(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+
+# 65.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"ON",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+70.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"ON",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+71.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+72.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+#####################
+## CREATE  Rules -OFF
+#####################
+## OFF-Today
+73.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+74.self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+75.self.AndroidPrimaryWeMoApp._clickOnByTimeSunriseSunset_TimerRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+76.for DEVICE in DEVICES_IN_NETWORK:self.AndroidPrimaryWeMoApp._selectTheWeMoToCreateTheRule_TimerRule(DEVICE);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True);self.AndroidPrimaryWeMoApp._selectTheActionForWeMo_TimerRule(DEVICE,"off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+77.self.AndroidPrimaryWeMoApp._clickOnWhenTab_TimerRule("off");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+78.self.AndroidPrimaryWeMoApp._clickOnTimeTabOfWhenRulePage_SimpleRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+79.Weekday= self.util.getTimeInStringFormat(self.util.getCurrentTime())['weekday']
+80.StartHH = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["hour"]
+81.StartMM = self.util.getTimeInStringFormat(self.util.addSecondsToTime(300))["minute"]
+82.StartTime_OFF_Today = "%s:%s"%(StartHH,StartMM)
+83.self.AndroidPrimaryWeMoApp._setTheTimeInWhenPage_SimpleAndTimerRule(StartHH,StartMM);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+84.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToSetTheTime();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+85.self.AndroidPrimaryWeMoApp._selectIndividualDay(Weekday);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+86.self.AndroidPrimaryWeMoApp._clickOnDoneButtonToConfirmChangesInWeMoApp();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+87.self.AndroidPrimaryWeMoApp._createANameOfRule_TimerRule("OFF-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+88.self.AndroidPrimaryWeMoApp._confirmChangesToCreateRule();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+89.self.AndroidPrimaryWeMoApp._verifyRuleCreated("OFF-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+90.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME='OFF-Today');self.VerifyEqual(self.wemoAppUtility.result,True)
+91.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+92.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+##########################
+##  VERIFY THE Rules   ##
+##########################
+##VERIFY -OFF_Today
+93.self.AndroidPrimaryWeMoApp._verifyTheTimeOnTheSmartPhonewithRulesetTime(StartTime_OFF_Today);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+94.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+95.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+96.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+97.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+98.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+99.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+100.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+101.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+102.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+103.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+104.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+105.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+106.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp_Insight._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.INSIGHT_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp_Insight.result,True)
+107.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.LIGHT_SWITCH][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+108.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.MAKER][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+109.if WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2 in self.WemoDevice:self.AndroidPrimaryWeMoApp._isWeMoTurnedOff(self.WemoDevice[WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SWITCH_V2][WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.WeMoFriendlyName]);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+110.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+111.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+# 106.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.getTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+# 107.for DEV_TYPE,DEV_SNO in zip(DEVICE_TYPE[1:],DEVICE_SERIAL_NUMBER[1:]):self.wemoAppUtility.setTheDeviceStatus(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,DEV_SNO,"OFF",self.routerIp,DEV_TYPE);self.VerifyEqual(self.wemoAppUtility.result,True)
+@@----------------------------
+@@ DELETE ALL Rules
+@@--------------------------
+112.self.AndroidPrimaryWeMoApp._launchWemoApp(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+113.self.AndroidPrimaryWeMoApp._clickOnRulesTab();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result , True)
+114.self.AndroidPrimaryWeMoApp._deleteOldRulesFromRulesPage();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+115.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("ON-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+116.self.AndroidPrimaryWeMoApp._verifyTheRuleIsDeleted("OFF-Today");self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+117.self.AndroidPrimaryWeMoApp._closeApplication(WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.AndroidAppIdentifier);self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+118.self.AndroidPrimaryWeMoApp._homeScreen();self.VerifyEqual(self.AndroidPrimaryWeMoApp.result,True)
+@@RULESDB
+# 115.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME="ON-Today");self.VerifyEqual(self.wemoAppUtility.result,False)
+# 116.for DEV_SNO in DEVICE_SERIAL_NUMBER:self.wemoAppUtility.verify_Add_Delete_RulesFromRulesDB(WIRELESS_SSID=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSID,WIRELESS_PASSWORD=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessPassword,WIRELESS_SECURITY=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.localWirelessSSIDSecurity,WIRELESS_INTERFACE=WEMO_APP_AUTOMATION_SNS_INSIGHT_LS_CONSTS.SERVER_WIFI_INTERFACE,WEMO_SERIAL_NUMBER=DEV_SNO,SERVER_IP=self.routerIp,RULE_NAME="OFF-Today");self.VerifyEqual(self.wemoAppUtility.result,False)
+$$PASSED TESTID:Rules/1
